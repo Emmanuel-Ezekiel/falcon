@@ -49,7 +49,7 @@ export async function register(data: RegisterData): Promise<AuthResponse> {
   return response.data;
 }
 
-export async function loginApi(data: LoginData): Promise<AuthResponse> {
+export async function login(data: LoginData): Promise<AuthResponse> {
   const response = await axiosInstance.post<AuthResponse>("/Auth/login", data);
   if (response.data.success && response.data.data) {
     localStorage.setItem("auth-token", response.data.data.token);
