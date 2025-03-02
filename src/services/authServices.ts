@@ -30,17 +30,16 @@ export interface AuthResponse {
 }
 
 export interface VerifyEmailData {
-  verificationCode: string
-  email: string
+  verificationCode: string;
+  email: string;
 }
 
 export interface ResetPasswordData {
-  email: string
-  code: string
-  password: string
-  confirmPassword: string
+  email: string;
+  code: string;
+  password: string;
+  confirmPassword: string;
 }
-
 
 export async function register(data: RegisterData): Promise<AuthResponse> {
   const response = await axiosInstance.post<AuthResponse>(
@@ -50,7 +49,7 @@ export async function register(data: RegisterData): Promise<AuthResponse> {
   return response.data;
 }
 
-export async function login(data: LoginData): Promise<AuthResponse> {
+export async function loginApi(data: LoginData): Promise<AuthResponse> {
   const response = await axiosInstance.post<AuthResponse>("/Auth/login", data);
   if (response.data.success && response.data.data) {
     localStorage.setItem("auth-token", response.data.data.token);
@@ -73,10 +72,9 @@ export async function forgotPassword(email: string): Promise<AuthResponse> {
   return response.data;
 }
 
-export async function resetPassword(data: {
-  token: string;
-  password: string;
-}): Promise<AuthResponse> {
+export async function resetPassword(
+  data: ResetPasswordData
+): Promise<AuthResponse> {
   const response = await axiosInstance.post<AuthResponse>(
     "/Auth/reset-password",
     data
@@ -84,10 +82,13 @@ export async function resetPassword(data: {
   return response.data;
 }
 
-export async function verifyEmail(token: string): Promise<AuthResponse> {
+export async function verifyEmail(
+  token: string,
+  email: string
+): Promise<AuthResponse> {
   const response = await axiosInstance.post<AuthResponse>(
     "/Auth/email-verify",
-    { token }
+    { verificationCode: token, email }
   );
   return response.data;
 }
