@@ -51,7 +51,7 @@ export default function ForgotPasswordPage() {
 
     try {
       const response = await forgotPassword(data.email)
-      if (response.success) {
+      if (response.isSuccess) {
         setSuccess(true)
         toast.success("Password reset instructions sent to your email")
       } else {

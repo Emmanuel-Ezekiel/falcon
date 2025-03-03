@@ -31,7 +31,12 @@ import { register } from "@/services/authServices";
 const registerSchema = z
   .object({
     email: z.string().email("Please enter a valid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    password: z
+      .string()
+      .min(11, "Password must be at least 11 characters")
+      .refine((password) => /[!@#$%^&*(),.?":{}|<>]/.test(password), {
+        message: "Password must contain at least one special character",
+      }),
     confirmPassword: z.string(),
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
@@ -94,7 +99,7 @@ export default function RegisterPage() {
 
     try {
       const response = await register(data);
-      if (response.success) {
+      if (response.isSuccess) {
         toast.success("Registration successful! Please verify your email.");
         router.push("/verify-email?email=" + encodeURIComponent(data.email));
       } else {

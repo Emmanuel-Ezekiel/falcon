@@ -184,7 +184,7 @@ async function register(data) {
 }
 async function login(data) {
     const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$config$2f$axios$2e$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("/Auth/login", data);
-    if (response.data.success && response.data.data) {
+    if (response.data.isSuccess && response.data.data) {
         localStorage.setItem("auth-token", response.data.data.token);
         localStorage.setItem("refresh-token", response.data.data.refreshToken);
     }
