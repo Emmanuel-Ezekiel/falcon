@@ -74,7 +74,7 @@ export default function ResetPasswordPage() {
 
     try {
       const response = await resetPassword(data)
-      if (response.success) {
+      if (response.isSuccess) {
         toast.success("Password reset successfully")
         router.push("/login?reset=success")
       } else {

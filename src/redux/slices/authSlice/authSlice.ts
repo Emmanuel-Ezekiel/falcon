@@ -38,7 +38,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async (credentials: authService.LoginData) => {
     const response = await authService.login(credentials);
-    if (!response.success) throw new Error(response.message);
+    if (!response.isSuccess) throw new Error(response.message);
     return response.data?.user;
   }
 );

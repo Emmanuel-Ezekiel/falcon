@@ -61,7 +61,7 @@ export default function VerifyEmailPage() {
 
     try {
       const response = await verifyEmail(data.verificationCode, email)
-      if (response.success) {
+      if (response.isSuccess) {
         setVerified(true)
         toast.success("Email verified successfully")
       } else {
