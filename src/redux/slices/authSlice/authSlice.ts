@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import * as authService from "../../../services/authServices";
+import { LoginData } from "@/types/auth-types";
+import { AuthResponse } from "../../../services/authServices";
+import axiosInstance from "@/config/axios.config";
 
 interface User {
   id: string;
@@ -34,14 +37,36 @@ export const checkAuth = createAsyncThunk("auth/checkAuth", async (_, { rejectWi
   }
 })
 
+
+
 export const login = createAsyncThunk(
   "auth/login",
-  async (credentials: authService.LoginData) => {
-    const response = await authService.login(credentials);
-    if (!response.isSuccess) throw new Error(response.message);
-    return response.data?.user;
+  async (credentials: authService.LoginData, { rejectWithValue }) => {
+    try {
+      console.log("Calling authService.login with:", credentials);
+      const response = await authService.login(credentials);
+      console.log("authService.login response:", response); // Log after call
+      if (!response.isSuccess) throw new Error(response.message);
+      return response.data?.user;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Thunk error:", error.message);
+      } else {
+        console.error("Thunk error:", error);
+      }
+      return rejectWithValue((error as Error).message); // Properly reject for Redux
+    }
   }
 );
+
+// export const login = createAsyncThunk(
+//   "auth/login",
+//   async (credentials: authService.LoginData) => {
+//     const response = await authService.login(credentials);
+//     if (!response.isSuccess) throw new Error(response.message);
+//     return response.data?.user;
+//   }
+// );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
   await authService.logout();
@@ -74,10 +99,10 @@ const authSlice = createSlice({
       })
       .addCase(
         login.fulfilled,
-        (state, action: PayloadAction<User | undefined>) => {
+        (state, action: PayloadAction<{ data: { user: User } }>) => {
           state.loading = false;
-          state.user = action.payload || null;
-          state.isAuthenticated = true
+          state.user = action.payload.data.user || null;
+          state.isAuthenticated = true;
         }
       )
       .addCase(login.rejected, (state, action) => {

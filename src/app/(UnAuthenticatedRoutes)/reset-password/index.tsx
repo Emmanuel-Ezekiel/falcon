@@ -144,7 +144,6 @@ export default function ResetPasswordPage() {
               </div>
               {errors.confirmPassword && <p className="text-xs text-red-500">{errors.confirmPassword}</p>}
             </div>
-            {errors.form && <p className="text-sm text-red-500">{errors.form}</p>}
             <Button type="submit" className="w-full" disabled={loading}>
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Reset Password

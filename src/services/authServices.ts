@@ -1,4 +1,5 @@
 import axiosInstance from "@/config/axios.config";
+// import { Dispatch } from "@reduxjs/toolkit";
 
 export interface RegisterData {
   email: string;
@@ -49,14 +50,33 @@ export async function register(data: RegisterData): Promise<AuthResponse> {
   return response.data;
 }
 
-export async function login(data: LoginData): Promise<AuthResponse> {
-  const response = await axiosInstance.post<AuthResponse>("/Auth/login", data);
-  if (response.data.isSuccess && response.data.data) {
-    localStorage.setItem("auth-token", response.data.data.token);
-    localStorage.setItem("refresh-token", response.data.data.refreshToken);
-  }
-  return response.data;
-}
+// export async function login(data: LoginData): Promise<AuthResponse> {
+//   const response = await axiosInstance.post<AuthResponse>("/Auth/login", data);
+//   console.log("Full response:", response); // Entire response object
+//   console.log("Response data:", response.data); // Just the data
+//   if (response.data.isSuccess && response.data.data) {
+//     localStorage.setItem("auth-token", response.data.data.token);
+//     localStorage.setItem("refresh-token", response.data.data.refreshToken);
+//   }
+
+//   return response.data;
+// }
+
+export const login = (data: LoginData) => async () => {
+	try {
+		const user = await axiosInstance.post<AuthResponse>("/Auth/login", { ...data });
+    if (user.data.isSuccess && user.data.data) {
+      localStorage.setItem("auth-token", user.data.data.token);
+      localStorage.setItem("refresh-token", user.data.data.refreshToken);
+    }
+		return { data: user?.data?.data };
+	} catch (error) {
+    console.log("Error:", error); // Log error
+		// return { errorMessage: handleErrorMessage(error) };
+	}
+};
+
+
 
 export async function logout(): Promise<void> {
   await axiosInstance.delete("/Auth/logout");
