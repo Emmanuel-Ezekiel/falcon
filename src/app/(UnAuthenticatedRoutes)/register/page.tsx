@@ -12,13 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -26,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { register } from "@/services/authServices";
+import AppLogo from "../components/AppLogo";
 
 // Form validation schema
 const registerSchema = z
@@ -115,166 +109,165 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center border">
-      <Card className="w-full max-w-lg">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">Create an account</CardTitle>
-          <CardDescription>
-            Enter your details below to create your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={onSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="firstName">First Name</Label>
-                <Input
-                  id="firstName"
-                  name="firstName"
-                  className={errors.firstName ? "border-red-500" : ""}
-                  required
-                />
-                {errors.firstName && (
-                  <p className="text-xs text-red-500">{errors.firstName}</p>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name</Label>
-                <Input
-                  id="lastName"
-                  name="lastName"
-                  className={errors.lastName ? "border-red-500" : ""}
-                  required
-                />
-                {errors.lastName && (
-                  <p className="text-xs text-red-500">{errors.lastName}</p>
-                )}
-              </div>
-            </div>
+    <div className="min-h-screen flex items-center justify-center bg-[#e6eff9] bg-gradient-to-br from-[#ffffff] to-[#e6eff9]">
+      <div className="w-[700px] border-[#080034] border-[0.5px]  p-8 mx-4 bg-white rounded-3xl shadow-sm">
+        <AppLogo />
+        <h2 className="text-3xl font-bold text-center text-[#24262b] mb-2">
+          Create Account
+        </h2>
+        <p className="text-center text-[#575757] mb-8">
+          Enter your details below to create your account
+        </p>
+        <form onSubmit={onSubmit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="firstName">First Name</Label>
               <Input
-                id="email"
-                name="email"
-                type="email"
-                className={errors.email ? "border-red-500" : ""}
+                id="firstName"
+                name="firstName"
+                className={errors.firstName ? "border-red-500" : ""}
                 required
               />
-              {errors.email && (
-                <p className="text-xs text-red-500">{errors.email}</p>
+              {errors.firstName && (
+                <p className="text-xs text-red-500">{errors.firstName}</p>
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone</Label>
+              <Label htmlFor="lastName">Last Name</Label>
               <Input
-                id="phone"
-                name="phone"
-                type="tel"
-                className={errors.phone ? "border-red-500" : ""}
+                id="lastName"
+                name="lastName"
+                className={errors.lastName ? "border-red-500" : ""}
                 required
               />
-              {errors.phone && (
-                <p className="text-xs text-red-500">{errors.phone}</p>
+              {errors.lastName && (
+                <p className="text-xs text-red-500">{errors.lastName}</p>
               )}
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="accountType">Account Type</Label>
-              <Select name="accountType" required>
-                <SelectTrigger
-                  className={errors.accountType ? "border-red-500" : ""}
-                >
-                  <SelectValue placeholder="Select account type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Trainer">Trainer</SelectItem>
-                  <SelectItem value="Trainee">Trainee</SelectItem>
-                  <SelectItem value="Client">Client</SelectItem>
-                  <SelectItem value="Admin">Admin</SelectItem>
-                  <SelectItem value="OJTCompany">OJTCompany</SelectItem>
-                </SelectContent>
-              </Select>
-              {errors.accountType && (
-                <p className="text-xs text-red-500">{errors.accountType}</p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  className={errors.password ? "border-red-500 pr-10" : "pr-10"}
-                  required
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <Eye className="h-4 w-4" />
-                  ) : (
-                    <EyeOff className="h-4 w-4" />
-                  )}
-                  <span className="sr-only">
-                    {showPassword ? "Hide password" : "Show password"}
-                  </span>
-                </Button>
-              </div>
-              {errors.password && (
-                <p className="text-xs text-red-500">{errors.password}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <div className="relative">
-                <Input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  className={
-                    errors.confirmPassword ? "border-red-500 pr-10" : "pr-10"
-                  }
-                  required
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <Eye className="h-4 w-4" />
-                  ) : (
-                    <EyeOff className="h-4 w-4" />
-                  )}
-                  <span className="sr-only">
-                    {showConfirmPassword ? "Hide password" : "Show password"}
-                  </span>
-                </Button>
-              </div>
-              {errors.confirmPassword && (
-                <p className="text-xs text-red-500">{errors.confirmPassword}</p>
-              )}
-            </div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Register
-            </Button>
-          </form>
-          <div className="mt-4 text-center text-sm">
-            Already have an account?{" "}
-            <Link href="/login" className="text-primary underline">
-              Login
-            </Link>
           </div>
-        </CardContent>
-      </Card>
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              className={errors.email ? "border-red-500" : ""}
+              required
+            />
+            {errors.email && (
+              <p className="text-xs text-red-500">{errors.email}</p>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="phone">Phone</Label>
+            <Input
+              id="phone"
+              name="phone"
+              type="tel"
+              className={errors.phone ? "border-red-500" : ""}
+              required
+            />
+            {errors.phone && (
+              <p className="text-xs text-red-500">{errors.phone}</p>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="accountType">Account Type</Label>
+            <Select name="accountType" required>
+              <SelectTrigger
+                className={errors.accountType ? "border-red-500" : ""}
+              >
+                <SelectValue placeholder="Select account type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Trainer">Trainer</SelectItem>
+                <SelectItem value="Trainee">Trainee</SelectItem>
+                <SelectItem value="Client">Client</SelectItem>
+                <SelectItem value="Admin">Admin</SelectItem>
+                <SelectItem value="OJTCompany">OJTCompany</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.accountType && (
+              <p className="text-xs text-red-500">{errors.accountType}</p>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                className={errors.password ? "border-red-500 pr-10" : "pr-10"}
+                required
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <Eye className="h-4 w-4" />
+                ) : (
+                  <EyeOff className="h-4 w-4" />
+                )}
+                <span className="sr-only">
+                  {showPassword ? "Hide password" : "Show password"}
+                </span>
+              </Button>
+            </div>
+            {errors.password && (
+              <p className="text-xs text-red-500">{errors.password}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <div className="relative">
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                className={
+                  errors.confirmPassword ? "border-red-500 pr-10" : "pr-10"
+                }
+                required
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <Eye className="h-4 w-4" />
+                ) : (
+                  <EyeOff className="h-4 w-4" />
+                )}
+                <span className="sr-only">
+                  {showConfirmPassword ? "Hide password" : "Show password"}
+                </span>
+              </Button>
+            </div>
+            {errors.confirmPassword && (
+              <p className="text-xs text-red-500">{errors.confirmPassword}</p>
+            )}
+          </div>
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Register
+          </Button>
+        </form>
+        <div className="mt-4 text-center text-sm">
+          Already have an account?{" "}
+          <Link href="/login" className="text-primary underline">
+            Login
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
