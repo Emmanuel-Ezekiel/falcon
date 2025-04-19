@@ -1,9 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import * as authService from "../../../services/authServices";
-// import { LoginData } from "@/types/auth-types";
-// import { AuthResponse } from "../../../services/authServices";
-// import axiosInstance from "@/config/axios.config";
+
 
 interface User {
   id: string;
