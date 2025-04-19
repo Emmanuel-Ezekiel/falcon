@@ -1,5 +1,4 @@
 import axiosInstance from "@/config/axios.config";
-// import { Dispatch } from "@reduxjs/toolkit";
 
 export interface RegisterData {
   email: string;
