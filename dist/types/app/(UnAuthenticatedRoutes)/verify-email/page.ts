@@ -1,4 +1,4 @@
-// File: /Users/rungeecodes/Desktop/falcon-web/src/app/(UnAuthenticatedRoutes)/verify-email/page.tsx
+// File: /Users/rungeecodes/Downloads/falcon-web/src/app/(UnAuthenticatedRoutes)/verify-email/page.tsx
 import * as entry from '../../../../../src/app/(UnAuthenticatedRoutes)/verify-email/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
